@@ -20,6 +20,7 @@ dependencies {
 
 kotlin {
     jvmToolchain(22)
+    explicitApi()
 }
 
 tasks.test {
