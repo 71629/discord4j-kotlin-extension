@@ -1,0 +1,11 @@
+[versions]
+discord4j = "3.3.3"
+coroutines-reactor = "1.10.2"
+reactor-extensions = "1.2.4"
+kotlinx-serialization = "1.9.0"
+
+[libraries]
+discord4j-core = { module = "com.discord4j:discord4j-core", version.ref = "discord4j" }
+kotlinx-coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "coroutines-reactor" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+reactor-kotlin-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-extensions", version.ref = "reactor-extensions" }
