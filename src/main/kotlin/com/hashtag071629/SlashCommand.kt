@@ -8,7 +8,6 @@ import discord4j.core.`object`.entity.Role
 import discord4j.core.`object`.entity.User
 import discord4j.core.`object`.entity.channel.Channel
 import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
-import discord4j.discordjson.json.ApplicationCommandOptionData
 import discord4j.discordjson.json.ApplicationCommandRequest
 import discord4j.discordjson.json.ImmutableApplicationCommandOptionData
 import discord4j.rest.util.PermissionSet
@@ -19,7 +18,6 @@ import org.jspecify.annotations.NonNull
 import reactor.util.Logger
 import reactor.util.Loggers
 import kotlin.jvm.optionals.getOrNull
-import kotlin.math.absoluteValue
 import kotlin.reflect.KProperty
 
 public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {

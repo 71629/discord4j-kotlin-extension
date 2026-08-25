@@ -2,7 +2,6 @@ package com.hashtag071629
 
 import discord4j.core.DiscordClient
 import discord4j.core.GatewayDiscordClient
-import discord4j.discordjson.json.ApplicationCommandRequest
 import discord4j.gateway.intent.IntentSet
 import kotlinx.coroutines.reactive.awaitSingle
 
