@@ -18,6 +18,7 @@ import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.reactor.mono
 import org.jspecify.annotations.NonNull
+import reactor.core.publisher.Mono
 import reactor.util.Logger
 import reactor.util.Loggers
 import kotlin.jvm.optionals.getOrNull
@@ -118,6 +119,7 @@ public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
             listeners.firstOrNull { event.commandName == it.name }?.let {
                 with(it) {
                     runCatching {
+                        it.optionDelegates.forEach { o -> o.onSlashCommand(event) }
                         event.handle()
                     }.onFailure { e ->
                         event.onException(e)
