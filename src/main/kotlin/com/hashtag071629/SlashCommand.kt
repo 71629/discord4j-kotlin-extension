@@ -1,8 +1,6 @@
 package com.hashtag071629
 
-import com.hashtag071629.SlashCommand.Companion.listeners
-import com.hashtag071629.SlashCommand.Companion.log
-import com.hashtag071629.SlashCommand.Companion.onSlashCommand
+import com.hashtag071629.SlashCommandMarker
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationIntegrationType
@@ -18,12 +16,12 @@ import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.reactor.mono
 import org.jspecify.annotations.NonNull
-import reactor.core.publisher.Mono
 import reactor.util.Logger
 import reactor.util.Loggers
 import kotlin.jvm.optionals.getOrNull
 import kotlin.reflect.KProperty
 
+@SlashCommandMarker
 public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
     public abstract val name: String
     public abstract val description: String
@@ -138,6 +136,7 @@ public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
     }
 }
 
+@ClientMarker
 public class SlashCommandConfigurator internal constructor() {
     internal val commands = mutableSetOf<SlashCommand>()
 

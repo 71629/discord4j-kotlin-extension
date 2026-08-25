@@ -7,7 +7,7 @@ import kotlinx.coroutines.reactive.awaitSingle
 
 public lateinit var client: GatewayDiscordClient
 
-public suspend fun client(token: String, intents: IntentSet, action: suspend GatewayDiscordClient.() -> Unit) {
+public suspend fun client(token: String, intents: IntentSet, action: @ClientMarker suspend GatewayDiscordClient.() -> Unit) {
     client = DiscordClient
         .create(token)
         .gateway()
