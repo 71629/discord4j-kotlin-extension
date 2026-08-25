@@ -17,10 +17,9 @@ public suspend fun initializeClient(token: String, intents: IntentSet): GatewayD
         .awaitSingle()
 }
 
-public fun GatewayDiscordClient.withClient(action: (GatewayDiscordClient) -> Unit) {
+public suspend fun GatewayDiscordClient.withClient(action: suspend GatewayDiscordClient.() -> Unit) {
     client = this
     action(this)
-    onDisconnect().block()
 }
 
 internal val defaultApplicationCommandRequest = ApplicationCommandRequest.builder()
