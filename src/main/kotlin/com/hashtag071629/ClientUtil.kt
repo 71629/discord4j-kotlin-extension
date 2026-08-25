@@ -20,5 +20,3 @@ public suspend fun initializeClient(token: String, intents: IntentSet) {
 public suspend fun client(action: suspend GatewayDiscordClient.() -> Unit) {
     client.action()
 }
-
-internal val defaultApplicationCommandRequest = ApplicationCommandRequest.builder()
