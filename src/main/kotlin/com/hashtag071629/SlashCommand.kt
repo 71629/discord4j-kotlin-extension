@@ -1,5 +1,8 @@
 package com.hashtag071629
 
+import com.hashtag071629.SlashCommand.Companion.listeners
+import com.hashtag071629.SlashCommand.Companion.log
+import com.hashtag071629.SlashCommand.Companion.onSlashCommand
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationIntegrationType
@@ -34,7 +37,7 @@ public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
         e.printStackTrace()
     }
 
-    private fun toApplicationCommandRequest(): ApplicationCommandRequest = ApplicationCommandRequest.builder().apply {
+    internal fun toApplicationCommandRequest(): ApplicationCommandRequest = ApplicationCommandRequest.builder().apply {
         type(1)
         name(name)
         description(description)
@@ -123,15 +126,33 @@ public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
             } ?: log.error("Slash command not found: ${event.commandName}")
         }
 
-        public suspend fun GatewayDiscordClient.installSlashCommands(vararg commands: SlashCommand) {
-            val requests = commands.map { it.toApplicationCommandRequest() }
-            listeners.addAll(commands)
-            val applicationId = restClient.applicationId.awaitSingle()
-            restClient.applicationService.bulkOverwriteGlobalApplicationCommand(applicationId, requests).subscribe {
-                log.info("Installed Slash Command: ${it.name()}")
+        public suspend fun GatewayDiscordClient.slashCommand(config: SlashCommandConfigurator.() -> Unit) {
+            SlashCommandConfigurator().apply(config).also {
+                it.configure()
+                listeners.addAll(it.commands)
             }
             on(ChatInputInteractionEvent::class.java) { mono { onSlashCommand(it) } }.subscribe {  }
         }
+    }
+}
+
+public class SlashCommandConfigurator internal constructor() {
+    internal val commands = mutableSetOf<SlashCommand>()
+
+    public fun install(command: SlashCommand) {
+        commands.add(command)
+    }
+
+    internal suspend fun configure() {
+        val requests = commands.map { it.toApplicationCommandRequest() }
+        val applicationId = client.restClient.applicationId.awaitSingle()
+        client.restClient.applicationService.bulkOverwriteGlobalApplicationCommand(applicationId, requests).subscribe {
+            log.info("Installed Slash Command: ${it.name()}")
+        }
+    }
+
+    private companion object {
+        private val log = Loggers.getLogger(SlashCommandConfigurator::class.java)
     }
 }
 
