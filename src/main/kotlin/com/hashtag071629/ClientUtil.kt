@@ -8,8 +8,8 @@ import kotlinx.coroutines.reactive.awaitSingle
 
 public lateinit var client: GatewayDiscordClient
 
-public suspend fun initializeClient(token: String, intents: IntentSet): GatewayDiscordClient {
-    return DiscordClient
+public suspend fun initializeClient(token: String, intents: IntentSet) {
+    client = DiscordClient
         .create(token)
         .gateway()
         .setEnabledIntents(intents)
@@ -17,9 +17,8 @@ public suspend fun initializeClient(token: String, intents: IntentSet): GatewayD
         .awaitSingle()
 }
 
-public suspend fun GatewayDiscordClient.withClient(action: suspend GatewayDiscordClient.() -> Unit) {
-    client = this
-    action(this)
+public suspend fun client(action: suspend GatewayDiscordClient.() -> Unit) {
+    client.action()
 }
 
 internal val defaultApplicationCommandRequest = ApplicationCommandRequest.builder()
