@@ -32,6 +32,10 @@ public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
 
     private val optionDelegates = mutableSetOf<SlashCommandOption<*>>()
 
+    override suspend fun ChatInputInteractionEvent.onException(e: Throwable) {
+        e.printStackTrace()
+    }
+
     private fun toApplicationCommandRequest(): ApplicationCommandRequest = ApplicationCommandRequest.builder().apply {
         type(1)
         name(name)
