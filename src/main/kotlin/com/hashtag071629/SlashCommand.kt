@@ -1,5 +1,6 @@
 package com.hashtag071629
 
+import com.hashtag071629.annotations.SlashCommandMarker
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationIntegrationType

@@ -1,5 +1,6 @@
 package com.hashtag071629
 
+import com.hashtag071629.annotations.ClientMarker
 import discord4j.core.DiscordClient
 import discord4j.core.GatewayDiscordClient
 import discord4j.gateway.intent.IntentSet
