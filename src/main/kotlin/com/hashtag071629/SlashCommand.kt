@@ -1,6 +1,5 @@
 package com.hashtag071629
 
-import com.hashtag071629.SlashCommandMarker
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationIntegrationType
@@ -32,7 +31,7 @@ public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
 
     private val optionDelegates = mutableSetOf<SlashCommandOption<*>>()
 
-    override suspend fun ChatInputInteractionEvent.onException(e: Throwable) {
+    override suspend fun onException(event: ChatInputInteractionEvent, e: Throwable) {
         e.printStackTrace()
     }
 
@@ -118,9 +117,9 @@ public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
                 with(it) {
                     runCatching {
                         it.optionDelegates.forEach { o -> o.onSlashCommand(event) }
-                        event.handle()
+                        handle(event)
                     }.onFailure { e ->
-                        event.onException(e)
+                        onException(event, e)
                     }
                 }
             } ?: log.error("Slash command not found: ${event.commandName}")
