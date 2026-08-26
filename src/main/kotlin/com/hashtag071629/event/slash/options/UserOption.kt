@@ -1,19 +1,18 @@
-package com.hashtag071629
+package com.hashtag071629.event.slash.options
 
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
-import discord4j.core.`object`.entity.Attachment
+import discord4j.core.`object`.entity.User
 import discord4j.discordjson.json.ImmutableApplicationCommandOptionData
-import kotlin.jvm.optionals.getOrNull
+import kotlinx.coroutines.reactor.awaitSingleOrNull
 
-public class AttachmentOption internal constructor(name: String, description: String, fileTypes: Set<String>?) : SlashCommandOption<Attachment>(name, description) {
+public class UserOption internal constructor(name: String, description: String) : SlashCommandOption<User>(name, description) {
     override val optionData: ImmutableApplicationCommandOptionData.Builder = ImmutableApplicationCommandOptionData.builder().apply {
-        type(11)
+        type(6)
         name(name)
         description(description)
-        fileTypes?.let { fileTypes(it) }
     }
 
     override suspend fun onSlashCommand(event: ChatInputInteractionEvent) {
-        userChoice = event.getOptionAsAttachment(name).getOrNull()
+        userChoice = event.getOptionAsUser(name).awaitSingleOrNull()
     }
 }

@@ -1,5 +1,6 @@
-package com.hashtag071629
+package com.hashtag071629.event.slash.options
 
+import com.hashtag071629.event.slash.SlashCommand
 import org.jspecify.annotations.NonNull
 import kotlin.reflect.KProperty
 

@@ -1,6 +1,7 @@
-package com.hashtag071629
+package com.hashtag071629.event.slash
 
 import com.hashtag071629.annotations.ClientMarker
+import com.hashtag071629.client
 import kotlinx.coroutines.reactor.awaitSingle
 import reactor.util.Loggers
 

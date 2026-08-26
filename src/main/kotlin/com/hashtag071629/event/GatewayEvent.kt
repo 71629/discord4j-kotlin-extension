@@ -1,4 +1,4 @@
-package com.hashtag071629
+package com.hashtag071629.event
 
 import discord4j.core.event.domain.Event
 

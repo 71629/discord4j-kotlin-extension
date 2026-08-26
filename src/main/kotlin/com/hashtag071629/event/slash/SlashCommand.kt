@@ -1,5 +1,15 @@
-package com.hashtag071629
+package com.hashtag071629.event.slash
 
+import com.hashtag071629.event.slash.options.AttachmentOption
+import com.hashtag071629.event.slash.options.ChannelOption
+import com.hashtag071629.event.slash.options.DoubleOption
+import com.hashtag071629.event.GatewayEvent
+import com.hashtag071629.event.slash.options.LongOption
+import com.hashtag071629.event.slash.options.RequiredOption
+import com.hashtag071629.event.slash.options.RoleOption
+import com.hashtag071629.event.slash.options.SlashCommandOption
+import com.hashtag071629.event.slash.options.StringOption
+import com.hashtag071629.event.slash.options.UserOption
 import com.hashtag071629.annotations.SlashCommandMarker
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent

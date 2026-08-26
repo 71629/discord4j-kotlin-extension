@@ -1,4 +1,4 @@
-package com.hashtag071629
+package com.hashtag071629.event.slash.options
 
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.entity.channel.Channel
