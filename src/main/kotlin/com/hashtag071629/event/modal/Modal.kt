@@ -27,28 +27,28 @@ public abstract class Modal : GatewayEvent<ModalSubmitInteractionEvent>() {
     internal val fields = mutableListOf<ModalField<*, *>>()
 
     protected fun textField(customId: String, config: TextField.() -> Unit): TextField =
-        TextField(customId).apply(config)
+        TextField(customId).apply(config).also { fields.add(it) }
 
     protected fun userSelect(customId: String, config: UserSelect.() -> Unit): UserSelect =
-        UserSelect(customId).apply(config)
+        UserSelect(customId).apply(config).also { fields.add(it) }
 
     protected fun roleSelect(customId: String, config: RoleSelect.() -> Unit): RoleSelect =
-        RoleSelect(customId).apply(config)
+        RoleSelect(customId).apply(config).also { fields.add(it) }
 
     protected fun channelSelect(customId: String, config: ChannelSelect.() -> Unit): ChannelSelect =
-        ChannelSelect(customId).apply(config)
+        ChannelSelect(customId).apply(config).also { fields.add(it) }
 
     protected fun radioGroup(customId: String, config: RadioGroup.() -> Unit): RadioGroup =
-        RadioGroup(customId).apply(config)
+        RadioGroup(customId).apply(config).also { fields.add(it) }
 
     protected fun checkboxGroup(customId: String, config: CheckboxGroup.() -> Unit): CheckboxGroup =
-        CheckboxGroup(customId).apply(config)
+        CheckboxGroup(customId).apply(config).also { fields.add(it) }
 
     protected fun checkboxField(customId: String, config: CheckboxField.() -> Unit): CheckboxField =
-        CheckboxField(customId).apply(config)
+        CheckboxField(customId).apply(config).also { fields.add(it) }
 
     protected fun fileUpload(customId: String, config: FileUpload.() -> Unit): FileUpload =
-        FileUpload(customId).apply(config)
+        FileUpload(customId).apply(config).also { fields.add(it) }
 
     protected fun <F : ModalField<R, C>, R, C> require(field: F): RequiredField<F, R, C> where C : MessageComponent, C : ICanBeUsedInLabelComponent =
         RequiredField(field)
