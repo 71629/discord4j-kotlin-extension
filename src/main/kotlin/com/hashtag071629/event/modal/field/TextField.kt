@@ -25,7 +25,7 @@ public class TextField internal constructor(
     }
 
     override val component: TextInput
-        get() = TextInput.of(style, customId, minLength, maxLength, defaultValue, placeholder)
+        get() = TextInput.of(style, customId, minLength, maxLength, defaultValue, placeholder).required(required)
 
     context(event: ModalSubmitInteractionEvent)
     override suspend fun updateValue(component: TextInput) {

@@ -20,7 +20,7 @@ import discord4j.core.`object`.component.MessageComponent
 @DelegatedOptionMarker
 public abstract class Modal : GatewayEvent<ModalSubmitInteractionEvent>() {
     context(_: ModalSubmitInteractionEvent)
-    internal suspend fun collectValues(components: List<ActionComponent>) {
+    internal suspend fun collectValues(components: List<MessageComponent>) {
         fields.forEach { it.collectValue(components) }
     }
 
@@ -50,6 +50,8 @@ public abstract class Modal : GatewayEvent<ModalSubmitInteractionEvent>() {
     protected fun fileUpload(customId: String, config: FileUpload.() -> Unit): FileUpload =
         FileUpload(customId).apply(config).also { fields.add(it) }
 
-    protected fun <F : ModalField<R, C>, R, C> require(field: F): RequiredField<F, R, C> where C : MessageComponent, C : ICanBeUsedInLabelComponent =
-        RequiredField(field)
+    protected fun <F : ModalField<R, C>, R, C> require(field: F): RequiredField<F, R, C> where C : MessageComponent, C : ICanBeUsedInLabelComponent {
+        fields.first { it === field }
+        return RequiredField(field)
+    }
 }

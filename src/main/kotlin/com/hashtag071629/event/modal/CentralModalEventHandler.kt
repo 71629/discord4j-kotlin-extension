@@ -3,6 +3,7 @@ package com.hashtag071629.event.modal
 import com.hashtag071629.client
 import discord4j.core.event.domain.interaction.ModalSubmitInteractionEvent
 import discord4j.core.`object`.component.ActionComponent
+import discord4j.core.`object`.component.MessageComponent
 import kotlinx.coroutines.reactor.mono
 import reactor.util.Loggers
 
@@ -19,7 +20,7 @@ internal object CentralModalEventHandler {
         listeners.remove(event.customId)?.let {
             runCatching {
                 with (event) {
-                    getComponents(ActionComponent::class.java).let { components ->
+                    getComponents(MessageComponent::class.java).let { components ->
                         it.collectValues(components)
                     }
                 }

@@ -20,7 +20,7 @@ public class CheckboxGroup internal constructor(
         get() = CheckboxGroupAction.of(customId, options.map {
         if (it.isDefault) CheckboxGroupAction.Option.ofDefault(it.label, it.value)
         else CheckboxGroupAction.Option.of(it.label, it.value)
-    })
+    }).required(required)
 
     context(event: ModalSubmitInteractionEvent)
     override suspend fun updateValue(component: CheckboxGroupAction) {

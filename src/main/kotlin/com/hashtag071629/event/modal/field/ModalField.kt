@@ -19,14 +19,16 @@ public sealed class ModalField<R, C>(
     internal val label: Label
         get() = description?.let { Label.of(fieldName, it, component) } ?: Label.of(fieldName, component)
 
+    internal var required = false
+
     init {
         require(customId.length <= 100) { "Would be a BAD_REQUEST: The custom ID must have no more than 100 characters." }
     }
 
     @Suppress("UNCHECKED_CAST")
     context(_: ModalSubmitInteractionEvent)
-    internal suspend fun collectValue(components: List<ActionComponent>) {
-        components.firstOrNull { it.customId == customId }?.let { updateValue(it as C) }
+    internal suspend fun collectValue(components: List<MessageComponent>) {
+        components.firstOrNull { it.data.customId().get() == customId }?.let { updateValue(it as C) }
     }
 
     public open operator fun getValue(thisRef: Modal, property: KProperty<*>): R? = userValue

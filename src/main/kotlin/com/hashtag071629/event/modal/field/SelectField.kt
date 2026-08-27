@@ -14,10 +14,10 @@ SelectField<R>(
     public var maxValues: Int,
 ) : FreeInputModalField<List<R>, SelectMenu>(customId, defaultValues, fieldName, description, placeholder) {
 
-    override val component: SelectMenu
-        get() = getSelectMenu()
+    override val component: SelectMenu get() = getSelectMenu()
         .withMinValues(minValues)
         .withMaxValues(maxValues)
+        .required(required)
 
     init {
         require(minValues in 0..25) { "Would be a BAD_REQUEST: minValues must sit between 0 and 25." }

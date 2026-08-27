@@ -22,7 +22,7 @@ public class RadioGroup internal constructor(
         get() = RadioGroupAction.of(customId, options.map {
         if (it.isDefault) RadioGroupAction.Option.ofDefault(it.label, it.value)
         else RadioGroupAction.Option.of(it.label, it.value)
-    })
+    }).required(required)
 
     context(event: ModalSubmitInteractionEvent)
     override suspend fun updateValue(component: RadioGroupAction) {
