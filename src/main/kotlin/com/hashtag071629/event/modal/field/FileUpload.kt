@@ -9,8 +9,9 @@ public class FileUpload internal constructor(
     customId: String,
     fieldName: String = customId,
     description: String? = null,
+    public var fileTypes: List<String> = emptyList()
 ) : ModalField<List<Attachment>, FileUpload>(customId, fieldName, description) {
-    override val component: FileUpload get() = FileUpload.of(customId)
+    override val component: FileUpload get() = FileUpload.of(customId).withFileTypes(fileTypes)
 
     context(event: ModalSubmitInteractionEvent)
     override suspend fun updateValue(component: FileUpload) {
