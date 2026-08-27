@@ -1,6 +1,6 @@
 package com.hashtag071629.event.modal
 
-import com.hashtag071629.annotations.DelegateMarker
+import com.hashtag071629.annotations.DelegatedOptionMarker
 import com.hashtag071629.event.GatewayEvent
 import com.hashtag071629.event.modal.field.ChannelSelect
 import com.hashtag071629.event.modal.field.CheckboxField
@@ -17,7 +17,7 @@ import discord4j.core.`object`.component.ActionComponent
 import discord4j.core.`object`.component.ICanBeUsedInLabelComponent
 import discord4j.core.`object`.component.MessageComponent
 
-@DelegateMarker
+@DelegatedOptionMarker
 public abstract class Modal : GatewayEvent<ModalSubmitInteractionEvent>() {
     context(_: ModalSubmitInteractionEvent)
     internal suspend fun collectValues(components: List<ActionComponent>) {

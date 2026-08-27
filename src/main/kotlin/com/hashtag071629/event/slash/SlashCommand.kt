@@ -1,5 +1,6 @@
 package com.hashtag071629.event.slash
 
+import com.hashtag071629.annotations.DelegatedOptionMarker
 import com.hashtag071629.event.slash.options.AttachmentOption
 import com.hashtag071629.event.slash.options.ChannelOption
 import com.hashtag071629.event.slash.options.DoubleOption
@@ -21,7 +22,7 @@ import kotlinx.coroutines.reactor.mono
 import reactor.util.Logger
 import reactor.util.Loggers
 
-@SlashCommandMarker
+@DelegatedOptionMarker
 public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
     public abstract val name: String
     public abstract val description: String
