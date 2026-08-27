@@ -10,7 +10,6 @@ import com.hashtag071629.event.slash.options.RoleOption
 import com.hashtag071629.event.slash.options.SlashCommandOption
 import com.hashtag071629.event.slash.options.StringOption
 import com.hashtag071629.event.slash.options.UserOption
-import com.hashtag071629.annotations.SlashCommandMarker
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationIntegrationType
