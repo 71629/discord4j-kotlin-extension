@@ -1,7 +1,5 @@
 plugins {
     kotlin("jvm") version "2.4.10"
-    kotlin("plugin.serialization") version "2.4.10"
-
     `maven-publish`
 }
 
@@ -29,7 +27,6 @@ publishing {
 dependencies {
     implementation(libs.discord4j.core)
     implementation(libs.kotlinx.coroutines.reactor)
-    implementation(libs.kotlinx.serialization.json)
     implementation(libs.reactor.kotlin.extensions)
     testImplementation(kotlin("test"))
 }
