@@ -5,7 +5,7 @@ I need a better project name.
 ## 🐿️ Features
 - ☑️**Ease of Use**: Automates application commands installation, no more writing JSON yourself
 - 📖**Readable**: Delegates options in slash commands and fields in modals so you can access the user's input like how you access regular objects
-- (soon) Message Components DSL
+- 🧩**Kotlin Idiomatic**: Message Components DSL
 - soon
 
 ## 🚌 Installation
@@ -42,6 +42,9 @@ dependencies {
 ```
 
 ## 🚀 Quick Example For Busy People
+
+A basic command that replies the user with the content sent to the bot:
+
 ```kotlin
 // Import the classes and functions yourself.
 
@@ -65,6 +68,35 @@ class Echo : SlashCommand() {
 
     override suspend fun handle(event: ChatInputInteractionEvent) {
         event.reply(content).subscribe()
+    }
+}
+```
+
+## 💡 Examples on Notable Features
+
+### Functional Message Components DSL
+
+This library allows building message components using functional programming.
+```kotlin
+fun helloContainer(disable: Boolean) = components {
+    container {
+        +"-# Click the button!"
+        separator()
+        actions(disable)
+    }
+}
+
+fun ContainerBuilder.actions(disable: Boolean) = actionRow {
+    button(/* customId */ "reply") {
+        style = Button.Style.SUCCESS
+        label = "click me!"
+        disabled = disable
+        
+        onClick { event ->
+            event.reply("you clicked me!").subscribe()
+
+            event.message.get().edit().withComponents(helloContainer(true)).subscribe()
+        }
     }
 }
 ```
