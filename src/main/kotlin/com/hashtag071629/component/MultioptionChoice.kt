@@ -1,4 +1,4 @@
-package com.hashtag071629.event.modal.field
+package com.hashtag071629.component
 
 public class MultioptionChoice internal constructor(
     internal val value: String,

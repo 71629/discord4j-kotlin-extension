@@ -1,5 +1,6 @@
 package com.hashtag071629.event.modal.field
 
+import com.hashtag071629.component.MultioptionChoice
 import discord4j.core.event.domain.interaction.ModalSubmitInteractionEvent
 import discord4j.core.`object`.component.CheckboxGroupAction
 import kotlin.jvm.optionals.getOrNull
