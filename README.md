@@ -49,11 +49,9 @@ A basic command that replies the user with the content sent to the bot:
 // Import the classes and functions yourself.
 
 fun main() {
-    runBlocking {
-        client("MTU.Your.Token", IntentSet.nonPrivileged()) {
-            slashCommand {
-                install(Echo())
-            }
+    client("MTU.Your.Token", IntentSet.nonPrivileged()) {
+        slashCommand {
+            install(Echo())
         }
     }
     
@@ -130,14 +128,14 @@ Initialization
 
 ```kotlin
 client("MTU.Your.Token", IntentSet.nonPrivileged()) {
-        slashCommand {
-            install(Greet())
-        }
-
-        button {
-            greetButton()
-        }
+    slashCommand {
+        install(Greet())
     }
+
+    button {
+        greetButton()
+    }
+}
 ```
 
 ## 🗣️ Yapping
