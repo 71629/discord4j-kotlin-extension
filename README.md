@@ -5,7 +5,7 @@ I need a better project name.
 ## 🐿️ Features
 - ☑️**Ease of Use**: Automates application commands installation, no more writing JSON yourself
 - 📖**Readable**: Delegates options in slash commands and fields in modals so you can access the user's input like how you access regular objects
-- 🧩**Kotlin Idiomatic**: Type-safe DSL for building interactive message components
+- 🧩**Kotlin Idiomatic**: DSL for building application command interactions and message components
 - soon
 
 ## 🚌 Installation
@@ -43,7 +43,7 @@ dependencies {
 
 ## 🚀 Quick Example For Busy People
 
-A basic command that replies the user with the content sent to the bot:
+A basic command that replies to the user with the content sent to the bot:
 
 ```kotlin
 // Import the classes and functions yourself.
@@ -51,20 +51,20 @@ A basic command that replies the user with the content sent to the bot:
 fun main() {
     client("MTU.Your.Token", IntentSet.nonPrivileged()) {
         slashCommand {
-            install(Echo())
+            echoCommand()
         }
     }
     
     client.onDisconnect().block()
 }
 
-class Echo : SlashCommand() {
-    override val name = "echo"
-    override val description = "3, 2, 1, repeat after me..."
+fun SlashCommand.echoCommand() = install {
+    name = "echo"
+    description = "3, 2, 1, repeat after me..."
     
-    private val content by require(stringOption("content", "the thing I should say..."))
+    val content by require(stringOption("content", "the thing I should say..."))
 
-    override suspend fun handle(event: ChatInputInteractionEvent) {
+    onInteraction { event ->
         event.reply(content).subscribe()
     }
 }
@@ -114,11 +114,11 @@ fun helloContainer(disable: Boolean) = components {
 The slash command
 
 ```kotlin
-class Greet : SlashCommand() {
-    override val name = "greet"
-    override val description = "Greets the user"
+fun SlashCommand.greetCommand() = install {
+    name = "greet"
+    description = "Greets the user"
 
-    override suspend fun handle(event: ChatInputInteractionEvent) {
+    onInteraction { event ->
         event.reply().withComponents(helloContainer(false)).subscribe()
     }
 }
@@ -129,7 +129,7 @@ Initialization
 ```kotlin
 client("MTU.Your.Token", IntentSet.nonPrivileged()) {
     slashCommand {
-        install(Greet())
+        greetCommand()
     }
 
     button {
