@@ -1,40 +1,61 @@
 package com.hashtag071629.event.slash
 
+import com.hashtag071629.annotations.ClientMarker
 import com.hashtag071629.annotations.DelegatedOptionMarker
-import com.hashtag071629.event.slash.options.AttachmentOption
-import com.hashtag071629.event.slash.options.ChannelOption
-import com.hashtag071629.event.slash.options.DoubleOption
+import com.hashtag071629.client
 import com.hashtag071629.event.GatewayEvent
-import com.hashtag071629.event.slash.options.LongOption
-import com.hashtag071629.event.slash.options.RequiredOption
-import com.hashtag071629.event.slash.options.RoleOption
 import com.hashtag071629.event.slash.options.SlashCommandOption
-import com.hashtag071629.event.slash.options.StringOption
-import com.hashtag071629.event.slash.options.UserOption
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationIntegrationType
-import discord4j.core.`object`.entity.channel.Channel
-import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 import discord4j.discordjson.json.ApplicationCommandRequest
 import discord4j.rest.util.PermissionSet
 import kotlinx.coroutines.reactor.mono
-import reactor.util.Logger
-import reactor.util.Loggers
 
-@DelegatedOptionMarker
-public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
-    public abstract val name: String
-    public abstract val description: String
+@ClientMarker
+public object SlashCommand {
+    internal val commands = mutableMapOf<String, SlashCommandDefinition>()
 
-    public open val defaultMemberPermissions: PermissionSet? = null
-    public open val nsfw: Boolean = false
-    public open val integrationTypes: Set<ApplicationIntegrationType>? = null
+    public fun install(config: SlashCommandDefinition.() -> Unit) {
+        val handler = SlashCommandDefinition().apply(config)
+        commands[handler.name] = handler
+    }
 
-    private val optionDelegates = mutableSetOf<SlashCommandOption<*>>()
+    public fun GatewayDiscordClient.slashCommand(config: SlashCommand.() -> Unit) {
+        SlashCommand.apply(config).configure()
+        on(ChatInputInteractionEvent::class.java) { mono { handle(it) } }.subscribe()
+    }
 
-    override suspend fun onException(event: ChatInputInteractionEvent, e: Throwable) {
-        e.printStackTrace()
+    internal fun configure() {
+        val requests = commands.values.map { it.toApplicationCommandRequest() }
+        val applicationId = client.restClient.applicationId.block() ?: throw UnknownError()
+        client.restClient.applicationService.bulkOverwriteGlobalApplicationCommand(applicationId, requests).subscribe()
+    }
+
+    private suspend fun handle(event: ChatInputInteractionEvent) {
+        commands[event.commandName]?.handle(event)
+    }
+}
+
+public class SlashCommandDefinition internal constructor() : GatewayEvent<ChatInputInteractionEvent>() {
+    public lateinit var name: String
+    public lateinit var description: String
+
+    public var defaultMemberPermissions: PermissionSet? = null
+    public var nsfw: Boolean = false
+    public var integrationTypes: Set<ApplicationIntegrationType>? = null
+
+    internal var onInteraction: suspend (ChatInputInteractionEvent) -> Unit = {}
+    internal var onException: suspend (ChatInputInteractionEvent, Throwable) -> Unit = ::onException
+
+    internal val optionDelegates = mutableSetOf<SlashCommandOption<*>>()
+
+    public fun onInteraction(block: suspend (ChatInputInteractionEvent) -> Unit) {
+        onInteraction = block
+    }
+
+    public fun onException(block: suspend (ChatInputInteractionEvent, Throwable) -> Unit) {
+        onException = block
     }
 
     internal fun toApplicationCommandRequest(): ApplicationCommandRequest = ApplicationCommandRequest.builder().apply {
@@ -47,92 +68,12 @@ public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
         integrationTypes?.let { integrationTypes(it.map { i -> i.value }) }
     }.build()
 
-    protected fun stringOption(
-        name: String,
-        description: String,
-        minLength: Int = 0,
-        maxLength: Int = 6000,
-        choices: List<ApplicationCommandOptionChoiceData>? = null,
-    ): StringOption = StringOption(name, description, minLength, maxLength, choices).also {
-        optionDelegates.add(it)
-    }
-
-    protected fun channelOption(
-        name: String,
-        description: String,
-        channelTypes: Set<Channel.Type>? = null,
-    ): ChannelOption = ChannelOption(name, description, channelTypes).also {
-        optionDelegates.add(it)
-    }
-
-    protected fun roleOption(
-        name: String,
-        description: String,
-    ): RoleOption = RoleOption(name, description).also {
-        optionDelegates.add(it)
-    }
-
-    protected fun userOption(
-        name: String,
-        description: String,
-    ): UserOption = UserOption(name, description).also {
-        optionDelegates.add(it)
-    }
-
-    protected fun attachmentOption(
-        name: String,
-        description: String,
-        fileTypes: Set<String>? = null,
-    ): AttachmentOption = AttachmentOption(name, description, fileTypes).also {
-        optionDelegates.add(it)
-    }
-
-    protected fun longOption(
-        name: String,
-        description: String,
-        minValue: Double = Double.MIN_VALUE,
-        maxValue: Double = Double.MAX_VALUE,
-    ): LongOption = LongOption(name, description, minValue, maxValue).also {
-        optionDelegates.add(it)
-    }
-
-    protected fun doubleOption(
-        name: String,
-        description: String,
-        minValue: Double = Double.MIN_VALUE,
-        maxValue: Double = Double.MAX_VALUE,
-    ): DoubleOption = DoubleOption(name, description, minValue, maxValue).also {
-        optionDelegates.add(it)
-    }
-
-    protected fun <T : SlashCommandOption<R>, R> require(option: T) : RequiredOption<T, R> {
-        optionDelegates.first { it === option }.setRequired()
-        return RequiredOption(option)
-    }
-
-    public companion object {
-        private val listeners: MutableSet<SlashCommand> = mutableSetOf()
-        protected val log: Logger = Loggers.getLogger(this::class.java)
-
-        private suspend fun onSlashCommand(event: ChatInputInteractionEvent) {
-            listeners.firstOrNull { event.commandName == it.name }?.let {
-                with(it) {
-                    runCatching {
-                        it.optionDelegates.forEach { o -> o.onSlashCommand(event) }
-                        handle(event)
-                    }.onFailure { e ->
-                        onException(event, e)
-                    }
-                }
-            } ?: log.error("Slash command not found: ${event.commandName}")
-        }
-
-        public fun GatewayDiscordClient.slashCommand(config: SlashCommandConfigurator.() -> Unit) {
-            SlashCommandConfigurator().apply(config).also {
-                it.configure()
-                listeners.addAll(it.commands)
-            }
-            on(ChatInputInteractionEvent::class.java) { mono { onSlashCommand(it) } }.subscribe {  }
+    override suspend fun handle(event: ChatInputInteractionEvent) {
+        runCatching {
+            optionDelegates.forEach { o -> o.onSlashCommand(event) }
+            onInteraction.invoke(event)
+        }.onFailure {
+            onException.invoke(event, it)
         }
     }
 }
