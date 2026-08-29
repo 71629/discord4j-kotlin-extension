@@ -8,7 +8,7 @@ import discord4j.core.`object`.component.TopLevelMessageComponent
 import discord4j.core.`object`.component.UnfurledMediaItem
 import discord4j.rest.util.Color
 
-public open class ComponentBuilder internal constructor() : ComponentDsl() {
+public open class ComponentTree internal constructor() : ComponentDsl() {
     internal val components = mutableListOf<TopLevelMessageComponent>()
 
     public operator fun String.unaryPlus() {
@@ -39,7 +39,7 @@ public open class ComponentBuilder internal constructor() : ComponentDsl() {
         components.add(Separator.of())
     }
 
-    public fun components(b: ComponentBuilder.() -> Unit): Nothing {
+    public fun components(b: ComponentTree.() -> Unit): Nothing {
         throw Exception("Stub!")
     }
 }
