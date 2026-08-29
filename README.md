@@ -5,7 +5,7 @@ I need a better project name.
 ## 🐿️ Features
 - ☑️**Ease of Use**: Automates application commands installation, no more writing JSON yourself
 - 📖**Readable**: Delegates options in slash commands and fields in modals so you can access the user's input like how you access regular objects
-- 🧩**Kotlin Idiomatic**: Message Components DSL
+- 🧩**Kotlin Idiomatic**: Type-safe DSL for building interactive message components
 - soon
 
 ## 🚌 Installation
