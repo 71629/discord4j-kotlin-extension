@@ -50,7 +50,7 @@ A basic command that replies the user with the content sent to the bot:
 
 fun main() {
     runBlocking {
-        client("MTU.Your.Token", IntentSet.all()) {
+        client("MTU.Your.Token", IntentSet.nonPrivileged()) {
             slashCommand {
                 install(Echo())
             }
@@ -77,28 +77,67 @@ class Echo : SlashCommand() {
 ### Functional Message Components DSL
 
 This library allows building message components using functional programming.
+
+Button definition:
+
+```kotlin
+const val GREET_BUTTON_ID = "greet"
+
+fun ButtonConfigurator.greetButton() = install(GREET_BUTTON_ID) {
+    onClick { event ->
+        event.reply("Hi!").subscribe()
+        event.message.get().edit().withComponentsOrNull(helloContainer(true)).subscribe()
+    }
+
+    onException { _, e ->
+        e.printStackTrace()
+    }
+}
+```
+
+Container definition
+
 ```kotlin
 fun helloContainer(disable: Boolean) = components {
     container {
-        +"-# Click the button!"
+        +"Click The Button"
         separator()
-        actions(disable)
-    }
-}
-
-fun ContainerBuilder.actions(disable: Boolean) = actionRow {
-    button(/* customId */ "reply") {
-        style = Button.Style.SUCCESS
-        label = "click me!"
-        disabled = disable
-        
-        onClick { event ->
-            event.reply("you clicked me!").subscribe()
-
-            event.message.get().edit().withComponents(helloContainer(true)).subscribe()
+        actionRow {
+            button(GREET_BUTTON_ID) {
+                style = if (disable) Button.Style.SECONDARY else Button.Style.PRIMARY
+                label = if (disable) "Greeted" else "Click Me"
+                disabled = disable
+            }
         }
     }
 }
+```
+
+The slash command
+
+```kotlin
+class Greet : SlashCommand() {
+    override val name = "greet"
+    override val description = "Greets the user"
+
+    override suspend fun handle(event: ChatInputInteractionEvent) {
+        event.reply().withComponents(helloContainer(false)).subscribe()
+    }
+}
+```
+
+Initialization
+
+```kotlin
+client("MTU.Your.Token", IntentSet.nonPrivileged()) {
+        slashCommand {
+            install(Greet())
+        }
+
+        button {
+            greetButton()
+        }
+    }
 ```
 
 ## 🗣️ Yapping
