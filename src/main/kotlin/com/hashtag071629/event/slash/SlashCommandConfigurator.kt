@@ -13,9 +13,9 @@ public class SlashCommandConfigurator internal constructor() {
         commands.add(command)
     }
 
-    internal suspend fun configure() {
+    internal fun configure() {
         val requests = commands.map { it.toApplicationCommandRequest() }
-        val applicationId = client.restClient.applicationId.awaitSingle()
+        val applicationId = client.restClient.applicationId.block() ?: throw UnknownError()
         client.restClient.applicationService.bulkOverwriteGlobalApplicationCommand(applicationId, requests).subscribe {
             log.info("Installed Slash Command: ${it.name()}")
         }

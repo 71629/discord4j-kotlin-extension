@@ -127,7 +127,7 @@ public abstract class SlashCommand : GatewayEvent<ChatInputInteractionEvent>() {
             } ?: log.error("Slash command not found: ${event.commandName}")
         }
 
-        public suspend fun GatewayDiscordClient.slashCommand(config: SlashCommandConfigurator.() -> Unit) {
+        public fun GatewayDiscordClient.slashCommand(config: SlashCommandConfigurator.() -> Unit) {
             SlashCommandConfigurator().apply(config).also {
                 it.configure()
                 listeners.addAll(it.commands)
