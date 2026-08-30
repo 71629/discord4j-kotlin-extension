@@ -1,5 +1,6 @@
 package com.hashtag071629.event.modal.field
 
+import com.hashtag071629.annotations.DelegatedOptionMarker
 import com.hashtag071629.event.modal.Modal
 import discord4j.core.event.domain.interaction.ModalSubmitInteractionEvent
 import discord4j.core.`object`.component.ActionComponent
@@ -8,6 +9,7 @@ import discord4j.core.`object`.component.Label
 import discord4j.core.`object`.component.MessageComponent
 import kotlin.reflect.KProperty
 
+@DelegatedOptionMarker
 public sealed class ModalField<R, C>(
     public var customId: String,
     public var fieldName: String,
@@ -31,7 +33,7 @@ public sealed class ModalField<R, C>(
         components.firstOrNull { it.data.customId().get() == customId }?.let { updateValue(it as C) }
     }
 
-    public open operator fun getValue(thisRef: Modal, property: KProperty<*>): R? = userValue
+    public open operator fun getValue(thisRef: Any?, property: KProperty<*>): R? = userValue
 
     context(event: ModalSubmitInteractionEvent)
     protected abstract suspend fun updateValue(component: C)
