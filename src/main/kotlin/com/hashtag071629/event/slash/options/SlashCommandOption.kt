@@ -8,7 +8,7 @@ public abstract class SlashCommandOption<T> internal constructor(public val name
     protected var userChoice: T? = null
     internal abstract val optionData: ImmutableApplicationCommandOptionData.Builder
 
-    public operator fun getValue(thisRef: Nothing?, property: KProperty<*>): T? = userChoice
+    public operator fun getValue(thisRef: Any?, property: KProperty<*>): T? = userChoice
 
     internal abstract suspend fun onSlashCommand(event: ChatInputInteractionEvent)
 
