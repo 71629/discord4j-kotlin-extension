@@ -1,7 +1,6 @@
 package com.hashtag071629.event.message
 
 import discord4j.core.GatewayDiscordClient
-import discord4j.core.event.domain.message.MessageCreateEvent
 import discord4j.core.event.domain.message.MessageUpdateEvent
 import kotlinx.coroutines.reactor.mono
 

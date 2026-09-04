@@ -12,8 +12,8 @@ import discord4j.rest.util.PermissionSet
 import kotlinx.coroutines.reactor.mono
 
 @ClientMarker
-public object SlashCommand : EventListener<ChatInputInteractionEvent, SlashCommand.SlashCommandDefinition>() {
-    override val definition: SlashCommandDefinition get() = SlashCommandDefinition()
+public object SlashCommand : EventListener<ChatInputInteractionEvent, SlashCommand.Definition>() {
+    override val definition: Definition get() = Definition()
 
     public fun GatewayDiscordClient.slashCommand(config: SlashCommand.() -> Unit) {
         SlashCommand.apply(config).configure()
@@ -26,11 +26,11 @@ public object SlashCommand : EventListener<ChatInputInteractionEvent, SlashComma
         client.restClient.applicationService.bulkOverwriteGlobalApplicationCommand(applicationId, requests).subscribe()
     }
 
-    public fun SlashCommandDefinition.onInteraction(block: suspend (ChatInputInteractionEvent) -> Unit) {
+    public fun Definition.onInteraction(block: suspend (ChatInputInteractionEvent) -> Unit) {
         action = block
     }
 
-    private fun SlashCommandDefinition.toApplicationCommandRequest() = ApplicationCommandRequest.builder().apply {
+    private fun Definition.toApplicationCommandRequest() = ApplicationCommandRequest.builder().apply {
         type(1)
         name(name)
         description(description)
@@ -49,7 +49,7 @@ public object SlashCommand : EventListener<ChatInputInteractionEvent, SlashComma
         }
     }
 
-    public class SlashCommandDefinition internal constructor() : Definition<ChatInputInteractionEvent>() {
+    public class Definition internal constructor() : EventListener.Definition<ChatInputInteractionEvent>() {
         public lateinit var name: String
         public lateinit var description: String
 
