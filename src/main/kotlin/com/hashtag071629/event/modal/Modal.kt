@@ -1,7 +1,7 @@
 package com.hashtag071629.event.modal
 
 import com.hashtag071629.annotations.DelegatedOptionMarker
-import com.hashtag071629.event.GatewayEvent
+import com.hashtag071629.event.GatewayEventDefinition
 import com.hashtag071629.event.modal.field.*
 import discord4j.core.event.domain.interaction.ModalSubmitInteractionEvent
 import discord4j.core.`object`.component.ICanBeUsedInLabelComponent
@@ -9,7 +9,7 @@ import discord4j.core.`object`.component.MessageComponent
 import reactor.util.Loggers
 
 @DelegatedOptionMarker
-public class Modal internal constructor(customId: String) : GatewayEvent<ModalSubmitInteractionEvent>() {
+public class Modal internal constructor(customId: String) : GatewayEventDefinition<ModalSubmitInteractionEvent>() {
 
     public var title: String = customId
     private var onSubmit: (suspend (ModalSubmitInteractionEvent) -> Unit)? = null

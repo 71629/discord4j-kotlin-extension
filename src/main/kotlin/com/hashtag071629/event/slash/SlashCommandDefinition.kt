@@ -1,13 +1,13 @@
 package com.hashtag071629.event.slash
 
-import com.hashtag071629.event.GatewayEvent
+import com.hashtag071629.event.GatewayEventDefinition
 import com.hashtag071629.event.slash.options.SlashCommandOption
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationIntegrationType
 import discord4j.discordjson.json.ApplicationCommandRequest
 import discord4j.rest.util.PermissionSet
 
-public class SlashCommandDefinition internal constructor() : GatewayEvent<ChatInputInteractionEvent>() {
+public class SlashCommandDefinition internal constructor() : GatewayEventDefinition<ChatInputInteractionEvent>() {
     public lateinit var name: String
     public lateinit var description: String
 

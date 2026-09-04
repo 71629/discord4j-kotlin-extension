@@ -1,7 +1,7 @@
 package com.hashtag071629.event.message
 
 import com.hashtag071629.annotations.ClientMarker
-import com.hashtag071629.event.GatewayEvent
+import com.hashtag071629.event.GatewayEventDefinition
 import discord4j.core.event.domain.Event
 import discord4j.core.event.domain.message.MessageEvent
 import kotlinx.coroutines.reactor.mono
@@ -24,7 +24,7 @@ public abstract class MessageListener<T : MessageEvent> internal constructor() {
         Flux.fromIterable(matches).flatMap({ mono { it() } }, maxConcurrency).subscribe()
     }
 
-    public class Definition<T : Event> internal constructor() : GatewayEvent<T>() {
+    public class Definition<T : Event> internal constructor() : GatewayEventDefinition<T>() {
         internal var predicate: (T) -> Boolean = { true }
         internal var action: suspend (T) -> Unit = {}
         internal var onException: (suspend (T, Throwable) -> Unit)? = null
