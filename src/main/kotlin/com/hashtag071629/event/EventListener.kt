@@ -1,4 +1,4 @@
-package com.hashtag071629.event.message
+package com.hashtag071629.event
 
 import com.hashtag071629.annotations.ClientMarker
 import discord4j.core.event.domain.Event

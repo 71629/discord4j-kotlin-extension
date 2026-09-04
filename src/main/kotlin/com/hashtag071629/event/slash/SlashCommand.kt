@@ -2,7 +2,7 @@ package com.hashtag071629.event.slash
 
 import com.hashtag071629.annotations.ClientMarker
 import com.hashtag071629.client
-import com.hashtag071629.event.message.EventListener
+import com.hashtag071629.event.EventListener
 import com.hashtag071629.event.slash.options.SlashCommandOption
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent

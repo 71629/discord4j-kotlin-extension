@@ -1,6 +1,6 @@
 package com.hashtag071629.event.reaction
 
-import com.hashtag071629.event.message.EventListener
+import com.hashtag071629.event.EventListener
 import discord4j.core.event.domain.message.ReactionRemoveEvent
 import kotlinx.coroutines.reactor.mono
 import reactor.core.publisher.Flux

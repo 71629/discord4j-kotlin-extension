@@ -1,6 +1,6 @@
 package com.hashtag071629.event.member
 
-import com.hashtag071629.event.message.EventListener
+import com.hashtag071629.event.EventListener
 import discord4j.core.event.domain.guild.MemberJoinEvent
 import kotlinx.coroutines.reactor.mono
 import reactor.core.publisher.Flux
