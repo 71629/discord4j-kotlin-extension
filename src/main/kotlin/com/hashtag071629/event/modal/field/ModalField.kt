@@ -7,6 +7,8 @@ import discord4j.core.`object`.component.ActionComponent
 import discord4j.core.`object`.component.ICanBeUsedInLabelComponent
 import discord4j.core.`object`.component.Label
 import discord4j.core.`object`.component.MessageComponent
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 import kotlin.reflect.KProperty
 
 @DelegatedOptionMarker

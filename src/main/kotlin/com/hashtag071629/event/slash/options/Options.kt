@@ -1,11 +1,11 @@
 package com.hashtag071629.event.slash.options
 
 import com.hashtag071629.annotations.DelegatedOptionMarker
-import com.hashtag071629.event.slash.SlashCommandDefinition
+import com.hashtag071629.event.slash.SlashCommand
 import discord4j.core.`object`.entity.channel.Channel
 import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 
-public fun @DelegatedOptionMarker SlashCommandDefinition.stringOption(
+public fun @DelegatedOptionMarker SlashCommand.SlashCommandDefinition.stringOption(
     name: String,
     description: String,
     minLength: Int = 0,
@@ -15,7 +15,7 @@ public fun @DelegatedOptionMarker SlashCommandDefinition.stringOption(
     optionDelegates.add(it)
 }
 
-public fun @DelegatedOptionMarker SlashCommandDefinition.channelOption(
+public fun @DelegatedOptionMarker SlashCommand.SlashCommandDefinition.channelOption(
     name: String,
     description: String,
     channelTypes: Set<Channel.Type>? = null,
@@ -23,21 +23,21 @@ public fun @DelegatedOptionMarker SlashCommandDefinition.channelOption(
     optionDelegates.add(it)
 }
 
-public fun @DelegatedOptionMarker SlashCommandDefinition.roleOption(
+public fun @DelegatedOptionMarker SlashCommand.SlashCommandDefinition.roleOption(
     name: String,
     description: String,
 ): RoleOption = RoleOption(name, description).also {
     optionDelegates.add(it)
 }
 
-public fun @DelegatedOptionMarker SlashCommandDefinition.userOption(
+public fun @DelegatedOptionMarker SlashCommand.SlashCommandDefinition.userOption(
     name: String,
     description: String,
 ): UserOption = UserOption(name, description).also {
     optionDelegates.add(it)
 }
 
-public fun @DelegatedOptionMarker SlashCommandDefinition.attachmentOption(
+public fun @DelegatedOptionMarker SlashCommand.SlashCommandDefinition.attachmentOption(
     name: String,
     description: String,
     fileTypes: Set<String>? = null,
@@ -45,7 +45,7 @@ public fun @DelegatedOptionMarker SlashCommandDefinition.attachmentOption(
     optionDelegates.add(it)
 }
 
-public fun @DelegatedOptionMarker SlashCommandDefinition.longOption(
+public fun @DelegatedOptionMarker SlashCommand.SlashCommandDefinition.longOption(
     name: String,
     description: String,
     minValue: Double = Double.MIN_VALUE,
@@ -54,7 +54,7 @@ public fun @DelegatedOptionMarker SlashCommandDefinition.longOption(
     optionDelegates.add(it)
 }
 
-public fun @DelegatedOptionMarker SlashCommandDefinition.doubleOption(
+public fun @DelegatedOptionMarker SlashCommand.SlashCommandDefinition.doubleOption(
     name: String,
     description: String,
     minValue: Double = Double.MIN_VALUE,
@@ -63,7 +63,7 @@ public fun @DelegatedOptionMarker SlashCommandDefinition.doubleOption(
     optionDelegates.add(it)
 }
 
-public fun <T : SlashCommandOption<R>, R> @DelegatedOptionMarker SlashCommandDefinition.require(option: T) : RequiredOption<T, R> {
+public fun <T : SlashCommandOption<R>, R> @DelegatedOptionMarker SlashCommand.SlashCommandDefinition.require(option: T) : RequiredOption<T, R> {
     optionDelegates.first { it === option }.setRequired()
     return RequiredOption(option)
 }
