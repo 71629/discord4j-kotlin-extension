@@ -26,6 +26,10 @@ public object SlashCommand : EventListener<ChatInputInteractionEvent, SlashComma
         client.restClient.applicationService.bulkOverwriteGlobalApplicationCommand(applicationId, requests).subscribe()
     }
 
+    public fun SlashCommandDefinition.onInteraction(block: suspend (ChatInputInteractionEvent) -> Unit) {
+        action = block
+    }
+
     private fun SlashCommandDefinition.toApplicationCommandRequest() = ApplicationCommandRequest.builder().apply {
         type(1)
         name(name)
