@@ -16,7 +16,7 @@ public object SlashCommand : EventListener<ChatInputInteractionEvent, SlashComma
     override val definition: Definition get() = Definition()
 
     public fun GatewayDiscordClient.slashCommand(config: SlashCommand.() -> Unit) {
-        SlashCommand.apply(config).configure()
+        apply(config).configure()
         on(ChatInputInteractionEvent::class.java) { mono { handle(it) } }.subscribe()
     }
 
