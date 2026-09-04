@@ -17,4 +17,8 @@ public object MemberUpdateListener : EventListener<MemberUpdateEvent, EventListe
     public fun Definition<MemberUpdateEvent>.condition(block: (MemberUpdateEvent) -> Boolean) {
         predicate = block
     }
+
+    public fun Definition<MemberUpdateEvent>.onUpdate(block: suspend (MemberUpdateEvent) -> Unit) {
+        action = block
+    }
 }

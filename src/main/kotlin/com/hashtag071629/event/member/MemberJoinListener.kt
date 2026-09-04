@@ -17,4 +17,8 @@ public object MemberJoinListener : EventListener<MemberJoinEvent, EventListener.
     public fun Definition<MemberJoinEvent>.condition(block: (MemberJoinEvent) -> Boolean) {
         predicate = block
     }
+
+    public fun Definition<MemberJoinEvent>.onJoin(block: suspend (MemberJoinEvent) -> Unit) {
+        action = block
+    }
 }
