@@ -34,7 +34,10 @@ public object SlashCommand : EventListener<ChatInputInteractionEvent, SlashComma
         type(1)
         name(name)
         description(description)
-        addAllOptions(optionDelegates.map { it.optionData.build() })
+        addAllOptions(optionDelegates.map {
+            it.parent = this@toApplicationCommandRequest
+            it.optionData.build()
+        })
         defaultMemberPermissions?.let { defaultMemberPermissions(it.rawValue.toString()) }
         nsfw(nsfw)
         integrationTypes?.let { integrationTypes(it.map { i -> i.value }) }

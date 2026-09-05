@@ -12,7 +12,11 @@ internal object CentralChatInputAutoCompleteListener {
     }
 
     private fun handle(event: ChatInputAutoCompleteEvent) {
-        val match = listeners.firstOrNull { it.name == event.focusedOption.name } ?: return
-        event.respondWithSuggestions(match.provider(event)).subscribe()
+        listeners.filter { it.name == event.focusedOption.name }
+            .takeIf { it.isNotEmpty() }
+            ?.firstOrNull { it.parent.name == event.commandName }
+            ?.let {
+                event.respondWithSuggestions(it.provider(event)).subscribe()
+            }
     }
 }
