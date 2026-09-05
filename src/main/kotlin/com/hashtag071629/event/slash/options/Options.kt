@@ -2,6 +2,7 @@ package com.hashtag071629.event.slash.options
 
 import com.hashtag071629.annotations.DelegatedOptionMarker
 import com.hashtag071629.event.slash.SlashCommand
+import discord4j.core.event.domain.interaction.ChatInputAutoCompleteEvent
 import discord4j.core.`object`.entity.channel.Channel
 import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 
@@ -12,6 +13,16 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.stringOption(
     maxLength: Int = 6000,
     choices: List<ApplicationCommandOptionChoiceData>? = null,
 ): StringOption = StringOption(name, description, minLength, maxLength, choices).also {
+    optionDelegates.add(it)
+}
+
+public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteStringOption(
+    name: String,
+    description: String,
+    minLength: Int = 0,
+    maxLength: Int = 6000,
+    provider: (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
+): AutoCompleteOption<String> = AutocompleteStringOption(name, description, minLength, maxLength, provider).also {
     optionDelegates.add(it)
 }
 
