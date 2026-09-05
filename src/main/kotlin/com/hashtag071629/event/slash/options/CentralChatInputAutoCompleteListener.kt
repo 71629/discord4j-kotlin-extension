@@ -16,7 +16,7 @@ internal object CentralChatInputAutoCompleteListener {
             .takeIf { it.isNotEmpty() }
             ?.firstOrNull { it.parent.name == event.commandName }
             ?.let {
-                event.respondWithSuggestions(it.provider(event)).subscribe()
+                event.respondWithSuggestions(it.provider.provide(event)).subscribe()
             }
     }
 }

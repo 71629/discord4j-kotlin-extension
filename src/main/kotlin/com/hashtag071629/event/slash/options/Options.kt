@@ -2,7 +2,6 @@ package com.hashtag071629.event.slash.options
 
 import com.hashtag071629.annotations.DelegatedOptionMarker
 import com.hashtag071629.event.slash.SlashCommand
-import discord4j.core.event.domain.interaction.ChatInputAutoCompleteEvent
 import discord4j.core.`object`.entity.channel.Channel
 import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 
@@ -21,7 +20,7 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteStringOpti
     description: String,
     minLength: Int = 0,
     maxLength: Int = 6000,
-    provider: suspend (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
+    provider: AutocompleteOptionProvider,
 ): AutoCompleteOption<String> = AutocompleteStringOption(name, description, minLength, maxLength, provider).also {
     optionDelegates.add(it)
 }
@@ -71,7 +70,7 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteLongOption
     description: String,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
-    provider: suspend (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
+    provider: AutocompleteOptionProvider,
 ): AutocompleteLongOption = AutocompleteLongOption(name, description, minValue, maxValue, provider).also {
     optionDelegates.add(it)
 }
@@ -91,7 +90,7 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteDoubleOpti
     description: String,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
-    provider: suspend (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
+    provider: AutocompleteOptionProvider,
 ): AutocompleteDoubleOption = AutocompleteDoubleOption(name, description, minValue, maxValue, provider).also {
     optionDelegates.add(it)
 }
