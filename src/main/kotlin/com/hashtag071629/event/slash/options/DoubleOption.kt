@@ -5,11 +5,11 @@ import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 import discord4j.discordjson.json.ImmutableApplicationCommandOptionData
 import kotlin.jvm.optionals.getOrNull
 
-public class DoubleOption internal constructor(name: String, description: String, minValue: Double, maxValue: Double, choices: List<ApplicationCommandOptionChoiceData>?) : SlashCommandOption<Double>(name, description) {
+public class DoubleOption internal constructor(name: String, description: String, minValue: Double?, maxValue: Double?, choices: List<ApplicationCommandOptionChoiceData>?) : SlashCommandOption<Double>(name, description) {
     override val optionData: ImmutableApplicationCommandOptionData.Builder = super.optionData.apply {
         type(10)
-        minValue(minValue)
-        maxValue(maxValue)
+        minValue?.let { minValue(it) }
+        maxValue?.let { maxValue(it) }
         choices?.let { choices(choices) }
     }
 

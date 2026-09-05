@@ -59,8 +59,8 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.longOption(
     name: String,
     description: String,
     choices: List<ApplicationCommandOptionChoiceData>? = null,
-    minValue: Double = Double.MIN_VALUE,
-    maxValue: Double = Double.MAX_VALUE,
+    minValue: Long? = null,
+    maxValue: Long? = null,
 ): LongOption = LongOption(name, description, minValue, maxValue, choices).also {
     optionDelegates.add(it)
 }
@@ -69,8 +69,8 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteLongOption
     name: String,
     description: String,
     provider: AutocompleteOptionProvider,
-    minValue: Double = Double.MIN_VALUE,
-    maxValue: Double = Double.MAX_VALUE,
+    minValue: Long? = null,
+    maxValue: Long? = null,
 ): AutocompleteLongOption = AutocompleteLongOption(name, description, minValue, maxValue, provider).also {
     optionDelegates.add(it)
 }
@@ -79,8 +79,8 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.doubleOption(
     name: String,
     description: String,
     choices: List<ApplicationCommandOptionChoiceData>? = null,
-    minValue: Double = Double.MIN_VALUE,
-    maxValue: Double = Double.MAX_VALUE,
+    minValue: Double? = null,
+    maxValue: Double? = null,
 ): DoubleOption = DoubleOption(name, description, minValue, maxValue, choices).also {
     optionDelegates.add(it)
 }
@@ -89,8 +89,8 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteDoubleOpti
     name: String,
     description: String,
     provider: AutocompleteOptionProvider,
-    minValue: Double = Double.MIN_VALUE,
-    maxValue: Double = Double.MAX_VALUE,
+    minValue: Double? = null,
+    maxValue: Double? = null,
 ): AutocompleteDoubleOption = AutocompleteDoubleOption(name, description, minValue, maxValue, provider).also {
     optionDelegates.add(it)
 }
