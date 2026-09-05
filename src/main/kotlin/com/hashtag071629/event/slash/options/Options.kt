@@ -8,9 +8,9 @@ import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 public fun @DelegatedOptionMarker SlashCommand.Definition.stringOption(
     name: String,
     description: String,
+    choices: List<ApplicationCommandOptionChoiceData>? = null,
     minLength: Int = 0,
     maxLength: Int = 6000,
-    choices: List<ApplicationCommandOptionChoiceData>? = null,
 ): StringOption = StringOption(name, description, minLength, maxLength, choices).also {
     optionDelegates.add(it)
 }
@@ -18,9 +18,9 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.stringOption(
 public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteStringOption(
     name: String,
     description: String,
+    provider: AutocompleteOptionProvider,
     minLength: Int = 0,
     maxLength: Int = 6000,
-    provider: AutocompleteOptionProvider,
 ): AutoCompleteOption<String> = AutocompleteStringOption(name, description, minLength, maxLength, provider).also {
     optionDelegates.add(it)
 }
@@ -58,9 +58,9 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.attachmentOption(
 public fun @DelegatedOptionMarker SlashCommand.Definition.longOption(
     name: String,
     description: String,
+    choices: List<ApplicationCommandOptionChoiceData>? = null,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
-    choices: List<ApplicationCommandOptionChoiceData>? = null,
 ): LongOption = LongOption(name, description, minValue, maxValue, choices).also {
     optionDelegates.add(it)
 }
@@ -68,9 +68,9 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.longOption(
 public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteLongOption(
     name: String,
     description: String,
+    provider: AutocompleteOptionProvider,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
-    provider: AutocompleteOptionProvider,
 ): AutocompleteLongOption = AutocompleteLongOption(name, description, minValue, maxValue, provider).also {
     optionDelegates.add(it)
 }
@@ -78,9 +78,9 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteLongOption
 public fun @DelegatedOptionMarker SlashCommand.Definition.doubleOption(
     name: String,
     description: String,
+    choices: List<ApplicationCommandOptionChoiceData>? = null,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
-    choices: List<ApplicationCommandOptionChoiceData>? = null,
 ): DoubleOption = DoubleOption(name, description, minValue, maxValue, choices).also {
     optionDelegates.add(it)
 }
@@ -88,9 +88,9 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.doubleOption(
 public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteDoubleOption(
     name: String,
     description: String,
+    provider: AutocompleteOptionProvider,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
-    provider: AutocompleteOptionProvider,
 ): AutocompleteDoubleOption = AutocompleteDoubleOption(name, description, minValue, maxValue, provider).also {
     optionDelegates.add(it)
 }
