@@ -21,7 +21,7 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteStringOpti
     description: String,
     minLength: Int = 0,
     maxLength: Int = 6000,
-    provider: (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
+    provider: suspend (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
 ): AutoCompleteOption<String> = AutocompleteStringOption(name, description, minLength, maxLength, provider).also {
     optionDelegates.add(it)
 }
@@ -71,7 +71,7 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteLongOption
     description: String,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
-    provider: (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
+    provider: suspend (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
 ): AutocompleteLongOption = AutocompleteLongOption(name, description, minValue, maxValue, provider).also {
     optionDelegates.add(it)
 }
@@ -91,7 +91,7 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteDoubleOpti
     description: String,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
-    provider: (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
+    provider: suspend (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
 ): AutocompleteDoubleOption = AutocompleteDoubleOption(name, description, minValue, maxValue, provider).also {
     optionDelegates.add(it)
 }

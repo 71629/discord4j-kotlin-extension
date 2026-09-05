@@ -6,7 +6,7 @@ import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 import discord4j.discordjson.json.ImmutableApplicationCommandOptionData
 import kotlin.jvm.optionals.getOrNull
 
-public class AutocompleteDoubleOption internal constructor(name: String, description: String, minValue: Double, maxValue: Double, provider: (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>) : AutoCompleteOption<Long>(name, description, provider) {
+public class AutocompleteDoubleOption internal constructor(name: String, description: String, minValue: Double, maxValue: Double, provider: suspend (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>) : AutoCompleteOption<Long>(name, description, provider) {
     init {
         require(minValue <= maxValue) { "minValue must be less than or equal to maxValue" }
     }

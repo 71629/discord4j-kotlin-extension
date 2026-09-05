@@ -13,7 +13,7 @@ public class AutocompleteStringOption internal constructor(
     description: String,
     minLength: Int,
     maxLength: Int,
-    provider: (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>
+    provider: suspend (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>
 ) : AutoCompleteOption<String>(name, description, provider) {
     init {
         require(minLength in 0..6000) { "minLength must be between 0 and 6000" }
