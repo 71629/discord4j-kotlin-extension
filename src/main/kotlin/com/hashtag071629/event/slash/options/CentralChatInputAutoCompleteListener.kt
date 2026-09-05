@@ -12,11 +12,13 @@ internal object CentralChatInputAutoCompleteListener {
     }
 
     private suspend fun handle(event: ChatInputAutoCompleteEvent) {
-        listeners.filter { it.name == event.focusedOption.name }
-            .takeIf { it.isNotEmpty() }
-            ?.firstOrNull { it.parent.name == event.commandName }
-            ?.let {
-                event.respondWithSuggestions(it.provider.provide(event)).subscribe()
-            }
+        runCatching {
+            listeners.filter { it.name == event.focusedOption.name }
+                .takeIf { it.isNotEmpty() }
+                ?.firstOrNull { it.parent.name == event.commandName }
+                ?.let {
+                    event.respondWithSuggestions(it.provider.provide(event)).subscribe()
+                }
+        }.onFailure { it.printStackTrace() }
     }
 }
