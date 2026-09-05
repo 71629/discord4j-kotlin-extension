@@ -10,7 +10,7 @@ public object MemberUpdateListener : EventListener<MemberUpdateEvent, EventListe
     override val definition: Definition<MemberUpdateEvent> = Definition()
     public var maxConcurrency: Int = Int.MAX_VALUE
 
-    public fun GatewayDiscordClient.memberJoinListener(config: MemberUpdateListener.() -> Unit) {
+    public fun GatewayDiscordClient.memberUpdateListener(config: MemberUpdateListener.() -> Unit) {
         config()
         on(MemberUpdateEvent::class.java) { mono { handle(it) } }.subscribe()
     }
