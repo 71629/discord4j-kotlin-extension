@@ -7,5 +7,5 @@ public sealed class DefaultValueField<R, C>(
     customId: String,
     fieldName: String,
     description: String?,
-    public val defaultValue: R?,
+    public var defaultValue: R?,
 ) : ModalField<R, C>(customId, fieldName, description) where C : MessageComponent, C : ICanBeUsedInLabelComponent
