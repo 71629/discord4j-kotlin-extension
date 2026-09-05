@@ -61,7 +61,8 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.longOption(
     description: String,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
-): LongOption = LongOption(name, description, minValue, maxValue).also {
+    choices: List<ApplicationCommandOptionChoiceData>? = null,
+): LongOption = LongOption(name, description, minValue, maxValue, choices).also {
     optionDelegates.add(it)
 }
 
@@ -80,7 +81,8 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.doubleOption(
     description: String,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
-): DoubleOption = DoubleOption(name, description, minValue, maxValue).also {
+    choices: List<ApplicationCommandOptionChoiceData>? = null,
+): DoubleOption = DoubleOption(name, description, minValue, maxValue, choices).also {
     optionDelegates.add(it)
 }
 
