@@ -15,15 +15,6 @@ public class TextField internal constructor(
     public var style: TextInput.Style = TextInput.Style.SHORT,
 ) : FreeInputModalField<String, TextInput>(customId, defaultValue, fieldName, description, placeholder) {
 
-    init {
-        require(minLength in 0..4000) { "Would be a BAD_REQUEST: minLength must sit between 0 and 4000" }
-        require(maxLength in 0..4000) { "Would be a BAD_REQUEST: maxLength must sit between 0 and 4000" }
-        require(minLength <= maxLength) { "Would be a BAD_REQUEST: minLength must be less than or equal to maxLength" }
-        defaultValue?.let {
-            require(it.length in minLength..maxLength) { "Would be a BAD_REQUEST: defaultValue must sit between minLength and maxLength" }
-        }
-    }
-
     override val component: TextInput
         get() = TextInput.of(style, customId, minLength, maxLength, defaultValue, placeholder).required(required)
 

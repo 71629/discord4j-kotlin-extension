@@ -19,12 +19,5 @@ SelectField<R>(
         .withMaxValues(maxValues)
         .required(required)
 
-    init {
-        require(minValues in 0..25) { "Would be a BAD_REQUEST: minValues must sit between 0 and 25." }
-        require(maxValues in 0..25) { "Would be a BAD_REQUEST: maxValues must sit between 0 and 25." }
-        require(minValues <= maxValues) { "Would be a BAD_REQUEST: minValues must be less than or equal to maxValues." }
-        require(defaultValues.size in minValues..maxValues) { "Would be a BAD_REQUEST: The number of default values must sit between minValues and maxValues." }
-    }
-
     protected abstract fun getSelectMenu(): SelectMenu
 }
