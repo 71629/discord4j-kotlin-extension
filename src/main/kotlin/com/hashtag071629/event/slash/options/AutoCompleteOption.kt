@@ -7,7 +7,7 @@ import discord4j.discordjson.json.ImmutableApplicationCommandOptionData
 public abstract class AutoCompleteOption<T> internal constructor(
     name: String,
     description: String,
-    internal val provider: (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>
+    internal val provider: suspend (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>
 ) : SlashCommandOption<T>(name, description) {
     init {
         CentralChatInputAutoCompleteListener.listeners.add(this)

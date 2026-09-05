@@ -11,7 +11,7 @@ internal object CentralChatInputAutoCompleteListener {
         client.on(ChatInputAutoCompleteEvent::class.java) { mono { handle(it) } }.subscribe()
     }
 
-    private fun handle(event: ChatInputAutoCompleteEvent) {
+    private suspend fun handle(event: ChatInputAutoCompleteEvent) {
         listeners.filter { it.name == event.focusedOption.name }
             .takeIf { it.isNotEmpty() }
             ?.firstOrNull { it.parent.name == event.commandName }
