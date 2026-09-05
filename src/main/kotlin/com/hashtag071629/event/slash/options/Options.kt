@@ -65,12 +65,32 @@ public fun @DelegatedOptionMarker SlashCommand.Definition.longOption(
     optionDelegates.add(it)
 }
 
+public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteLongOption(
+    name: String,
+    description: String,
+    minValue: Double = Double.MIN_VALUE,
+    maxValue: Double = Double.MAX_VALUE,
+    provider: (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
+): AutocompleteLongOption = AutocompleteLongOption(name, description, minValue, maxValue, provider).also {
+    optionDelegates.add(it)
+}
+
 public fun @DelegatedOptionMarker SlashCommand.Definition.doubleOption(
     name: String,
     description: String,
     minValue: Double = Double.MIN_VALUE,
     maxValue: Double = Double.MAX_VALUE,
 ): DoubleOption = DoubleOption(name, description, minValue, maxValue).also {
+    optionDelegates.add(it)
+}
+
+public fun @DelegatedOptionMarker SlashCommand.Definition.autocompleteDoubleOption(
+    name: String,
+    description: String,
+    minValue: Double = Double.MIN_VALUE,
+    maxValue: Double = Double.MAX_VALUE,
+    provider: (ChatInputAutoCompleteEvent) -> List<ApplicationCommandOptionChoiceData>,
+): AutocompleteDoubleOption = AutocompleteDoubleOption(name, description, minValue, maxValue, provider).also {
     optionDelegates.add(it)
 }
 
