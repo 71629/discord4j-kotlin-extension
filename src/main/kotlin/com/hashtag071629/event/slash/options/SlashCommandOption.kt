@@ -6,7 +6,10 @@ import kotlin.reflect.KProperty
 
 public abstract class SlashCommandOption<T> internal constructor(public val name: String, public val description: String) {
     protected var userChoice: T? = null
-    internal abstract val optionData: ImmutableApplicationCommandOptionData.Builder
+    internal open val optionData: ImmutableApplicationCommandOptionData.Builder = ImmutableApplicationCommandOptionData.builder().apply {
+        name(name)
+        description(description)
+    }
 
     public operator fun getValue(thisRef: Any?, property: KProperty<*>): T? = userChoice
 

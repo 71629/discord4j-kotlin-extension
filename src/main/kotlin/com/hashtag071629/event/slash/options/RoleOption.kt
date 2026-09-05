@@ -6,10 +6,8 @@ import discord4j.discordjson.json.ImmutableApplicationCommandOptionData
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 
 public class RoleOption internal constructor(name: String, description: String) : SlashCommandOption<Role>(name, description) {
-    override val optionData: ImmutableApplicationCommandOptionData.Builder = ImmutableApplicationCommandOptionData.builder().apply {
+    override val optionData: ImmutableApplicationCommandOptionData.Builder = super.optionData.apply {
         type(8)
-        name(name)
-        description(description)
     }
 
     override suspend fun onSlashCommand(event: ChatInputInteractionEvent) {

@@ -13,9 +13,7 @@ public abstract class AutoCompleteOption<T> internal constructor(
         CentralChatInputAutoCompleteListener.listeners.add(this)
     }
 
-    override val optionData: ImmutableApplicationCommandOptionData.Builder get() = ImmutableApplicationCommandOptionData.builder().apply {
-        name(name)
-        description(description)
+    override val optionData: ImmutableApplicationCommandOptionData.Builder = super.optionData.apply {
         autocomplete(true)
     }
 }

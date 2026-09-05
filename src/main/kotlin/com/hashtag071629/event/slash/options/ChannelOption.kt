@@ -6,10 +6,8 @@ import discord4j.discordjson.json.ImmutableApplicationCommandOptionData
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 
 public class ChannelOption internal constructor(name: String, description: String, channelTypes: Set<Channel.Type>?) : SlashCommandOption<Channel>(name, description) {
-    override val optionData: ImmutableApplicationCommandOptionData.Builder = ImmutableApplicationCommandOptionData.builder().apply {
+    override val optionData: ImmutableApplicationCommandOptionData.Builder = super.optionData.apply {
         type(7)
-        name(name)
-        description(description)
         channelTypes?.let { channelTypes(it.map { c -> c.value }) }
     }
 

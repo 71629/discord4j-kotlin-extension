@@ -10,10 +10,8 @@ public class LongOption internal constructor(name: String, description: String, 
         require(minValue <= maxValue) { "minValue must be less than or equal to maxValue" }
     }
 
-    override val optionData: ImmutableApplicationCommandOptionData.Builder = ImmutableApplicationCommandOptionData.builder().apply {
+    override val optionData: ImmutableApplicationCommandOptionData.Builder = super.optionData.apply {
         type(4)
-        name(name)
-        description(description)
         minValue(minValue)
         maxValue(maxValue)
         choices?.let { choices(choices) }

@@ -5,16 +5,14 @@ import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 import discord4j.discordjson.json.ImmutableApplicationCommandOptionData
 import kotlin.jvm.optionals.getOrNull
 
-public class StringOption internal constructor(name: String, description: String, minLength: Int, maxLength: Int, choices: List<ApplicationCommandOptionChoiceData>?) : SlashCommandOption<String>(name, description) {
+public open class StringOption internal constructor(name: String, description: String, minLength: Int, maxLength: Int, choices: List<ApplicationCommandOptionChoiceData>?) : SlashCommandOption<String>(name, description) {
     init {
         require(minLength in 0..6000) { "minLength must be between 0 and 6000" }
         require(maxLength in 0..6000) { "maxLength must be between 0 and 6000" }
     }
 
-    override val optionData: ImmutableApplicationCommandOptionData.Builder = ImmutableApplicationCommandOptionData.builder().apply {
+    override val optionData: ImmutableApplicationCommandOptionData.Builder = super.optionData.apply {
         type(3)
-        name(name)
-        description(description)
         minLength(minLength)
         maxLength(maxLength)
         choices?.let { choices(it) }
@@ -24,3 +22,4 @@ public class StringOption internal constructor(name: String, description: String
         userChoice = event.getOptionAsString(name).getOrNull()
     }
 }
+
