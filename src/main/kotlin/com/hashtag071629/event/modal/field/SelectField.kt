@@ -2,9 +2,7 @@ package com.hashtag071629.event.modal.field
 
 import discord4j.core.`object`.component.SelectMenu
 
-public sealed class
-
-SelectField<R>(
+public sealed class SelectField<R>(
     customId: String,
     defaultValues: List<R> = emptyList(),
     fieldName: String = customId,
