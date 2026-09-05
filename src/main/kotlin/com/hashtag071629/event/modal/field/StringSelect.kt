@@ -11,7 +11,7 @@ public class StringSelect internal constructor(
     placeholder: String? = null,
     minValues: Int = 1,
     maxValues: Int = 1,
-    public var options: List<SelectMenu.Option>
+    public var options: List<SelectMenu.Option> = emptyList()
 ) : SelectField<String>(customId, emptyList(), fieldName, description, placeholder, minValues, maxValues) {
     override fun getSelectMenu(): SelectMenu = SelectMenu.of(customId, options).apply {
         this@StringSelect.placeholder?.let { withPlaceholder(it) }

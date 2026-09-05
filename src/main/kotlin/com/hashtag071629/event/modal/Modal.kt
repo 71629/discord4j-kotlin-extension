@@ -33,6 +33,9 @@ public class Modal internal constructor(customId: String) : GatewayEventDefiniti
     public fun textField(customId: String, config: TextField.() -> Unit): TextField =
         TextField(customId).apply(config).also { fields.add(it) }
 
+    public fun stringSelect(customId: String, config: StringSelect.() -> Unit): StringSelect =
+        StringSelect(customId).apply(config).also { fields.add(it) }
+
     public fun userSelect(customId: String, config: UserSelect.() -> Unit): UserSelect =
         UserSelect(customId).apply(config).also { fields.add(it) }
 
