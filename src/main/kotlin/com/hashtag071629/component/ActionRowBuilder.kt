@@ -2,12 +2,17 @@ package com.hashtag071629.component
 
 import discord4j.core.`object`.component.ActionComponent
 import discord4j.core.`object`.component.ActionRow
+import discord4j.core.`object`.component.Button
 
 public class ActionRowBuilder internal constructor() : ComponentDsl() {
     private val children: MutableList<ActionComponent> = mutableListOf()
 
     public fun button(customId: String, builder: ButtonBuilder.() -> Unit) {
         children.add(ButtonBuilder(customId).apply(builder).buildAll())
+    }
+
+    public fun linkButton(label: String, url: String) {
+        children.add(Button.link(label, url))
     }
 
     public fun stringSelect(customId: String, builder: StringSelectBuilder.() -> Unit) {
