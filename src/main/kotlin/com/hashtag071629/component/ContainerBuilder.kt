@@ -9,7 +9,7 @@ import discord4j.core.`object`.component.TextDisplay
 import discord4j.core.`object`.component.UnfurledMediaItem
 import discord4j.rest.util.Color
 
-public class ContainerBuilder internal constructor(private val color: Color?) : ComponentDsl() {
+public class ContainerBuilder internal constructor(private val color: Color?, private val spoiler: Boolean) : ComponentDsl() {
     internal val children = mutableListOf<ICanBeUsedInContainerComponent>()
 
     public operator fun String.unaryPlus() {
@@ -37,6 +37,6 @@ public class ContainerBuilder internal constructor(private val color: Color?) : 
     }
 
     internal fun buildAll(): Container {
-        return Container.of(color, children)
+        return Container.of(color, spoiler, children)
     }
 }

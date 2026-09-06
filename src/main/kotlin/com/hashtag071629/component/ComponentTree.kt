@@ -15,8 +15,8 @@ public open class ComponentTree internal constructor() : ComponentDsl() {
         components.add(TextDisplay.of(this))
     }
 
-    public fun container(color: Color? = null, builder: ContainerBuilder.() -> Unit) {
-        components.add(ContainerBuilder(color).apply(builder).buildAll())
+    public fun container(color: Color? = null, spoiler: Boolean = false, builder: ContainerBuilder.() -> Unit) {
+        components.add(ContainerBuilder(color, spoiler).apply(builder).buildAll())
     }
 
     public fun section(accessory: IAccessoryComponent, builder: SectionBuilder.() -> Unit) {
