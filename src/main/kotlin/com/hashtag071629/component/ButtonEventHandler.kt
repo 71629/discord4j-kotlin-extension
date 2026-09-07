@@ -1,17 +1,14 @@
 package com.hashtag071629.component
 
 import com.hashtag071629.event.EventListener
-import com.hashtag071629.event.slash.SlashCommand
-import com.hashtag071629.event.slash.SlashCommand.handle
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ButtonInteractionEvent
-import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import kotlinx.coroutines.reactor.mono
 
-public object CentralButtonEventHandler : EventListener<ButtonInteractionEvent, CentralButtonEventHandler.Definition>() {
+public object ButtonEventHandler : EventListener<ButtonInteractionEvent, ButtonEventHandler.Definition>() {
     override val definition: Definition get() = Definition()
 
-    public fun GatewayDiscordClient.button(config: CentralButtonEventHandler.() -> Unit) {
+    public fun GatewayDiscordClient.button(config: ButtonEventHandler.() -> Unit) {
         apply(config)
         on(ButtonInteractionEvent::class.java) { mono { handle(it) } }.subscribe()
     }
