@@ -8,8 +8,8 @@ public abstract class EventListener<E : Event, D : EventListener.Definition<E>> 
     protected val listeners: MutableList<D> = mutableListOf()
     protected abstract val definition: D
 
-    internal var beforeExecution: ((E) -> Unit)? = null
-    internal var afterExecution: ((E) -> Unit)? = null
+    internal var beforeExecution: (D.(E) -> Unit)? = null
+    internal var afterExecution: (D.(E) -> Unit)? = null
     internal var onException: (suspend (E, Throwable) -> Unit)? = null
 
     public fun install(config: D.() -> Unit) {
@@ -17,11 +17,11 @@ public abstract class EventListener<E : Event, D : EventListener.Definition<E>> 
         listeners.add(def)
     }
 
-    public fun beforeExecution(block: (E) -> Unit) {
+    public fun beforeExecution(block: D.(E) -> Unit) {
         beforeExecution = block
     }
 
-    public fun afterExecution(block: (E) -> Unit) {
+    public fun afterExecution(block: D.(E) -> Unit) {
         afterExecution = block
     }
 
@@ -33,7 +33,9 @@ public abstract class EventListener<E : Event, D : EventListener.Definition<E>> 
 
     protected suspend fun D.handle(event: E) {
         runCatching {
+            if (!excludeFromBeforeExecution) beforeExecution?.invoke(this, event)
             action.invoke(event)
+            if (!excludeFromAfterExecution) afterExecution?.invoke(this, event)
         }.onFailure {
             it.printStackTrace()
             if (!excludeGlobalOnException) onException?.invoke(event, it)
