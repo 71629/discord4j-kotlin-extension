@@ -13,6 +13,6 @@ public class SectionBuilder internal constructor(private val accessory: IAccesso
     }
 
     internal fun buildAll(): Section {
-        return Section.of(accessory)
+        return Section.of(accessory, children)
     }
 }
