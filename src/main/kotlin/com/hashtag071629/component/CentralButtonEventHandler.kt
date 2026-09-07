@@ -10,9 +10,8 @@ import kotlinx.coroutines.reactor.mono
 public object CentralButtonEventHandler : EventListener<ButtonInteractionEvent, CentralButtonEventHandler.Definition>() {
     override val definition: Definition get() = Definition()
 
-    public fun GatewayDiscordClient.button(customId: String, config: Definition.() -> Unit) {
-        definition.apply(config).also { it.customId = customId }
-
+    public fun GatewayDiscordClient.button(config: CentralButtonEventHandler.() -> Unit) {
+        apply(config)
         on(ButtonInteractionEvent::class.java) { mono { handle(it) } }.subscribe()
     }
 
