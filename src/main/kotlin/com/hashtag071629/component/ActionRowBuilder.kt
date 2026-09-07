@@ -11,8 +11,8 @@ public class ActionRowBuilder internal constructor() : ComponentDsl() {
         children.add(ButtonBuilder(customId).apply(builder).buildAll())
     }
 
-    public fun linkButton(label: String, url: String) {
-        children.add(Button.link(label, url))
+    public fun linkButton(url: String, label: String) {
+        children.add(Button.link(url, label))
     }
 
     public fun stringSelect(customId: String, builder: StringSelectBuilder.() -> Unit) {
