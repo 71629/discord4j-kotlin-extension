@@ -6,12 +6,23 @@ import discord4j.core.event.domain.Event
 @ClientMarker
 public abstract class EventListener<E : Event, D : EventListener.Definition<E>> internal constructor() {
     protected val listeners: MutableList<D> = mutableListOf()
-    internal var onException: (suspend (E, Throwable) -> Unit)? = null
     protected abstract val definition: D
+
+    internal var beforeExecution: ((E) -> Unit)? = null
+    internal var afterExecution: ((E) -> Unit)? = null
+    internal var onException: (suspend (E, Throwable) -> Unit)? = null
 
     public fun install(config: D.() -> Unit) {
         val def = definition.apply(config)
         listeners.add(def)
+    }
+
+    public fun beforeExecution(block: (E) -> Unit) {
+        beforeExecution = block
+    }
+
+    public fun afterExecution(block: (E) -> Unit) {
+        afterExecution = block
     }
 
     public fun onException(block: suspend (E, Throwable) -> Unit) {
@@ -39,6 +50,8 @@ public abstract class EventListener<E : Event, D : EventListener.Definition<E>> 
         internal var action: suspend (T) -> Unit = {}
         internal var onException: (suspend (T, Throwable) -> Unit)? = null
 
+        public var excludeFromBeforeExecution: Boolean = false
+        public var excludeFromAfterExecution: Boolean = false
         public var excludeGlobalOnException: Boolean = false
     }
 }
