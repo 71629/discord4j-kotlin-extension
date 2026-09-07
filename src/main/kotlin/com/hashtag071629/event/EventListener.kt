@@ -10,7 +10,7 @@ public abstract class EventListener<E : Event, D : EventListener.Definition<E>> 
 
     internal var beforeExecution: (D.(E) -> Unit)? = null
     internal var afterExecution: (D.(E) -> Unit)? = null
-    internal var onException: (suspend (E, Throwable) -> Unit)? = null
+    internal var onException: (suspend D.(E, Throwable) -> Unit)? = null
 
     public fun install(config: D.() -> Unit) {
         val def = definition.apply(config)
@@ -25,7 +25,7 @@ public abstract class EventListener<E : Event, D : EventListener.Definition<E>> 
         afterExecution = block
     }
 
-    public fun onException(block: suspend (E, Throwable) -> Unit) {
+    public fun onException(block: suspend D.(E, Throwable) -> Unit) {
         onException = block
     }
 
