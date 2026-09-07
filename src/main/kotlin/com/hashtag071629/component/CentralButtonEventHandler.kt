@@ -5,6 +5,7 @@ import com.hashtag071629.event.slash.SlashCommand
 import com.hashtag071629.event.slash.SlashCommand.handle
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ButtonInteractionEvent
+import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import kotlinx.coroutines.reactor.mono
 
 public object CentralButtonEventHandler : EventListener<ButtonInteractionEvent, CentralButtonEventHandler.Definition>() {
@@ -13,6 +14,10 @@ public object CentralButtonEventHandler : EventListener<ButtonInteractionEvent, 
     public fun GatewayDiscordClient.button(config: CentralButtonEventHandler.() -> Unit) {
         apply(config)
         on(ButtonInteractionEvent::class.java) { mono { handle(it) } }.subscribe()
+    }
+
+    public fun Definition.onClick(block: suspend (ButtonInteractionEvent) -> Unit) {
+        action = block
     }
 
     override suspend fun handle(event: ButtonInteractionEvent) {
