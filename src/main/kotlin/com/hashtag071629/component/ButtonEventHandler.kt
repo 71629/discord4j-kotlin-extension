@@ -13,9 +13,10 @@ public object ButtonEventHandler : EventListener<ButtonInteractionEvent, ButtonE
         on(ButtonInteractionEvent::class.java) { mono { handle(it) } }.subscribe()
     }
 
-    public fun Definition.install(customId: String, config: Definition.() -> Unit) {
-        super.install(config)
-        this.customId = customId
+    public fun install(customId: String, config: Definition.() -> Unit) {
+        val def = definition.apply(config)
+        def.customId = customId
+        listeners.add(def)
     }
 
     public fun Definition.onClick(block: suspend (ButtonInteractionEvent) -> Unit) {
