@@ -38,7 +38,7 @@ public abstract class EventListener<E : Event, D : EventListener.Definition<E>> 
             if (!excludeFromAfterExecution) afterExecution?.invoke(this, event)
         }.onFailure {
             it.printStackTrace()
-            if (!excludeGlobalOnException) onException?.invoke(event, it)
+            if (!excludeGlobalOnException) this@EventListener.onException?.invoke(this, event, it)
             onException?.invoke(event, it)
         }
     }
