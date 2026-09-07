@@ -7,7 +7,7 @@ import kotlinx.coroutines.reactor.mono
 import reactor.core.publisher.Flux
 
 public object MemberUpdateListener : EventListener<MemberUpdateEvent, EventListener.Definition<MemberUpdateEvent>>() {
-    override val definition: Definition<MemberUpdateEvent> = Definition()
+    override val definition: Definition<MemberUpdateEvent> get() = Definition()
     public var maxConcurrency: Int = Int.MAX_VALUE
 
     public fun GatewayDiscordClient.memberUpdateListener(config: MemberUpdateListener.() -> Unit) {

@@ -7,7 +7,7 @@ import kotlinx.coroutines.reactor.mono
 import reactor.core.publisher.Flux
 
 public object MemberLeaveListener : EventListener<MemberLeaveEvent, EventListener.Definition<MemberLeaveEvent>>() {
-    override val definition: Definition<MemberLeaveEvent> = Definition()
+    override val definition: Definition<MemberLeaveEvent> get() = Definition()
     public var maxConcurrency: Int = Int.MAX_VALUE
 
     public fun GatewayDiscordClient.memberLeaveListener(config: MemberLeaveListener.() -> Unit) {

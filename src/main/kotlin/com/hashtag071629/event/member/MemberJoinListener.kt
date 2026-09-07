@@ -7,7 +7,7 @@ import kotlinx.coroutines.reactor.mono
 import reactor.core.publisher.Flux
 
 public object MemberJoinListener : EventListener<MemberJoinEvent, EventListener.Definition<MemberJoinEvent>>() {
-    override val definition: Definition<MemberJoinEvent> = Definition()
+    override val definition: Definition<MemberJoinEvent> get() = Definition()
     public var maxConcurrency: Int = Int.MAX_VALUE
 
     public fun GatewayDiscordClient.memberJoinListener(config: MemberJoinListener.() -> Unit) {
