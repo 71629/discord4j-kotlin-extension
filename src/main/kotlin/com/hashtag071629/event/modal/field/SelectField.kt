@@ -11,11 +11,7 @@ public sealed class SelectField<R>(
     public var minValues: Int,
     public var maxValues: Int,
 ) : FreeInputModalField<List<R>, SelectMenu>(customId, defaultValues, fieldName, description, placeholder) {
-
-    override val component: SelectMenu get() = getSelectMenu()
-        .withMinValues(minValues)
-        .withMaxValues(maxValues)
-        .required(required)
-
-    protected abstract fun getSelectMenu(): SelectMenu
+    protected val setCommonData: SelectMenu.() -> SelectMenu = {
+        withMinValues(this@SelectField.minValues).withMaxValues(this@SelectField.maxValues).required(required)
+    }
 }

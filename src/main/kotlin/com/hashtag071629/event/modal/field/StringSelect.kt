@@ -13,8 +13,8 @@ public class StringSelect internal constructor(
     maxValues: Int = 1,
     public var options: List<SelectMenu.Option> = emptyList()
 ) : SelectField<String>(customId, emptyList(), fieldName, description, placeholder, minValues, maxValues) {
-    override fun getSelectMenu(): SelectMenu = SelectMenu.of(customId, options).apply {
-        this@StringSelect.placeholder?.let { withPlaceholder(it) }
+    override val component = SelectMenu.of(customId, options).setCommonData().let {
+        placeholder?.let { p -> it.withPlaceholder(p) } ?: it
     }
 
     context(event: ModalSubmitInteractionEvent)

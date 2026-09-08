@@ -7,8 +7,7 @@ import discord4j.core.`object`.entity.channel.Channel
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlin.jvm.optionals.getOrNull
 
-public class
-ChannelSelect internal constructor(
+public class ChannelSelect internal constructor(
     customId: String,
     defaultValues: List<Channel> = emptyList(),
     fieldName: String = customId,
@@ -17,11 +16,9 @@ ChannelSelect internal constructor(
     minValues: Int = 1,
     maxValues: Int = 1,
 ) : SelectField<Channel>(customId, defaultValues, fieldName, description, placeholder, minValues, maxValues) {
-
-    override fun getSelectMenu(): SelectMenu {
-        return SelectMenu.ofChannel(customId)
-            .withDefaultValues(defaultValue?.map { SelectMenu.DefaultValue.of(it.id, SelectMenu.DefaultValue.Type.CHANNEL) } ?: emptyList())
-    }
+    override val component get() = SelectMenu.ofChannel(customId)
+        .setCommonData()
+        .withDefaultValues(defaultValue?.map { SelectMenu.DefaultValue.of(it.id, SelectMenu.DefaultValue.Type.CHANNEL) } ?: emptyList())
 
     context(event: ModalSubmitInteractionEvent)
     override suspend fun updateValue(component: SelectMenu) {

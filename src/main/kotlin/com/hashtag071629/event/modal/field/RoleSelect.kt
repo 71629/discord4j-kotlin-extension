@@ -16,11 +16,9 @@ public class RoleSelect internal constructor(
     minValues: Int = 1,
     maxValues: Int = 1,
 ) : SelectField<Role>(customId, defaultValues, fieldName, description, placeholder, minValues, maxValues) {
-
-    override fun getSelectMenu(): SelectMenu {
-        return SelectMenu.ofRole(customId)
-            .withDefaultValues(defaultValue?.map { SelectMenu.DefaultValue.of(it.id, SelectMenu.DefaultValue.Type.ROLE) } ?: emptyList())
-    }
+    override val component get() = SelectMenu.ofRole(customId)
+        .setCommonData()
+        .withDefaultValues(defaultValue?.map { SelectMenu.DefaultValue.of(it.id, SelectMenu.DefaultValue.Type.ROLE) } ?: emptyList())
 
     context(event: ModalSubmitInteractionEvent)
     override suspend fun updateValue(component: SelectMenu) {

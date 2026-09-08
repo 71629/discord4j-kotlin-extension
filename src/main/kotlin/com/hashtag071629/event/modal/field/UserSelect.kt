@@ -17,10 +17,9 @@ public class UserSelect internal constructor(
     minValues: Int = 1,
     maxValues: Int = 1,
 ) : SelectField<User>(customId, defaultValues, fieldName, description, placeholder, minValues, maxValues) {
-    override fun getSelectMenu(): SelectMenu {
-        return SelectMenu.ofUser(customId)
-            .withDefaultValues(defaultValue?.map { SelectMenu.DefaultValue.of(it.id, SelectMenu.DefaultValue.Type.USER) } ?: emptyList())
-    }
+    override val component get() = SelectMenu.ofUser(customId)
+        .setCommonData()
+        .withDefaultValues(defaultValue?.map { SelectMenu.DefaultValue.of(it.id, SelectMenu.DefaultValue.Type.USER) } ?: emptyList())
 
     context(event: ModalSubmitInteractionEvent)
     override suspend fun updateValue(component: SelectMenu) {
