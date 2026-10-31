@@ -1,6 +1,4 @@
-# Certainly! I'll explore your codebase and come up with an easy-to-remember name for this project!
-
-I need a better project name.
+# Kommand - For [Discord4J](https://github.com/Discord4J/Discord4J)
 
 ## 🐿️ Features
 - ☑️**Ease of Use**: Automates application commands installation, no more writing JSON yourself
@@ -13,19 +11,15 @@ I need a better project name.
 ### Requirements
 - JDK 8+
 
-This project is currently in a very early stage of development and is very unstable. Therefore, you'll need to build the artifacts yourself.
-The master branch will always be targeting the latest version of Discord4J, this will be the same until I decide to release a stable version of this library.
-
-Publish the artifacts to maven local:
-```bash
-./gradlew publishToMavenLocal
-```
-
-Install the library to your project:
+You may install this library to your project using jitpack:
 
 ```kotlin
 repositories {
     whateverRepositoryYouAreUsing()
+    maven {
+        name = "Jitpack"
+        url = uri("https://jitpack.io")
+    }
 }
 
 dependencies {
